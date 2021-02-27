@@ -1,15 +1,35 @@
-package main;
-
-import domains.File;
-import domains.FileType;
-import domains.Folder;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class Trabalho1 {
+public class Main extends FileFolderService {
 
-    // para um melhor entendimento das ligações criadas em main, foi criado o DesenhoObjetos.pnj
+    /*
+
+        Aluna: Viviane da Rosa Sommer
+        GRR: 20182564
+
+        ***** Para um melhor entendimento das ligações criadas em main, foi criado o DesenhoObjetos.pnj *****
+
+        Compilar e rodar na Orval:
+            javac Main.java FileFolderService.java File.java Folder.java FileType.java
+            java Main
+
+        Arquivos:
+            File.java - classe que representa um Arquivo
+            Folder.java - classe que representa uma Pasta
+            FileType.java - enum que contém os Tipos de Arquivo
+            FileFolderService.java - classe que contém os métodos
+                a) executePrintFileNameText - método que loga o início e fim de printFileNameText
+                b) executePrintFolderAndFileNames - método que loga o início e fim de printFolderAndFileNames
+                c) printFolderAndFileNames - método que imprime o nome dos Folder e chama printFileName para os Files
+                d) printFileName - método que imprime o nome dos Files
+                e) printFileNameText - método que imprime o nome dos Files do tipo TEXT
+                f) generateTab - método que faz o cálculo do número de Tabs (para imprimir os Folder e Files alinhados)
+            Main.java - classe que instancia Files e Folders para testar os métodos de FileFolderService
+            Diagrama.drawio - desenho da ligação entre Folder,File e FileType
+            DesenhoObjetos.pnj - desenho das ligações dos objetos instanciados em Main
+
+     */
 
     public static void main(String[] args) {
 
@@ -75,88 +95,4 @@ public class Trabalho1 {
 
     }
 
-    private static void executePrintFileNameText(List<Folder> allFolders) {
-        System.out.println("\n##### Start -> printFileNameText #####");
-        printFileNameText(allFolders);
-        System.out.println("##### Finish -> printFileNameText #####\n");
-    }
-
-    private static void executePrintFolderAndFileNames(List<Folder> allFolders) {
-        System.out.println("\n##### Start -> printFolderAndFileNames #####");
-        printFolderAndFileNames(allFolders, 0);
-        System.out.println("##### Finish -> printFolderAndFileNames #####");
-    }
-
-    public static void printFolderAndFileNames(List<Folder> folders, int tab) {
-
-        if (folders != null && !folders.isEmpty()) {
-
-            folders.forEach(folder -> {
-
-                System.out.println(generateTab(tab) + folder.getName());
-
-                printFileName(folder, tab + 1);
-
-                if (folder.getFolders() != null && !folder.getFolders().isEmpty()) {
-
-                    printFolderAndFileNames(folder.getFolders(), tab + 1);
-
-                }
-            });
-        }
-    }
-
-    private static void printFileName(Folder folder, int tab) {
-
-        if (folder.getFiles() != null && !folder.getFiles().isEmpty()) {
-
-            folder.getFiles().forEach(file -> {
-
-                System.out.println(generateTab(tab) + file.getName());
-
-            });
-
-        }
-
-    }
-
-    public static void printFileNameText(List<Folder> folders) {
-
-        if (folders != null && !folders.isEmpty()) {
-
-            folders.forEach(folder -> {
-
-                if (folder.getFiles() != null && !folder.getFiles().isEmpty()) {
-
-                    folder.getFiles().forEach(file -> {
-
-                        if (file.getFileType().equals(FileType.TEXT)) {
-                            System.out.println(generateTab(0) + file.getName());
-                        }
-
-                    });
-
-                }
-
-                if (folder.getFolders() != null && !folder.getFolders().isEmpty()) {
-                    printFileNameText(folder.getFolders());
-                }
-
-            });
-
-        }
-    }
-
-    public static String generateTab(int tab) {
-
-        StringBuilder espacamento = new StringBuilder();
-
-        for (int i = 0; i < tab; i++) {
-
-            espacamento.append(espacamento).append("\t");
-
-        }
-
-        return String.valueOf(espacamento);
-    }
 }

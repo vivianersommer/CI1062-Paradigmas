@@ -1,5 +1,3 @@
-package domains;
-
 public enum FileType {
 
     TEXT,
